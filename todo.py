@@ -1,6 +1,13 @@
 import tkinter as Tk
 
+ToDo = []
+txt = []
+spent = []
+spentNumber = []
+spentButton = []
 estimate = []
+estimateNumber = []
+deleteButton = []
 
 
 class Application(Tk.Frame):
@@ -11,14 +18,14 @@ class Application(Tk.Frame):
 
         # 変数初期化
         self.ToDoNumber = 0
-        self.ToDo = []
-        self.txt = []
-        self.spent = []
-        self.spentNumber = []
-        self.spentButton = []
+        # self.ToDo = []
+        # self.txt = []
+        # self.spent = []
+        # self.spentNumber = []
+        # self.spentButton = []
         # self.estimate = []
-        self.estimateNumber = []
-        self.deleteButton = []
+        # self.estimateNumber = []
+        # self.deleteButton = []
 
         # ウィジェットの生成・配置
         self.create_widgets()
@@ -53,8 +60,8 @@ class Application(Tk.Frame):
         ToDoNew = Tk.Label(self, width=30, textvariable=txtNew)
 
         # 新たに作成したラベル,txtをリストに追加
-        self.txt.append(txtNew)
-        self.ToDo.append(ToDoNew)
+        txt.append(txtNew)
+        ToDo.append(ToDoNew)
 
         # 新しいラベルをToDoリストの末尾に追加
         self.ToDoNumber += 1
@@ -64,14 +71,14 @@ class Application(Tk.Frame):
         spentNumberNew = Tk.StringVar()
         spentNumberNew.set('0')
         spentNew = Tk.Label(self, width=2, textvariable=spentNumberNew)
-        self.spent.append(spentNew)
-        self.spentNumber.append(spentNumberNew)
+        spent.append(spentNew)
+        spentNumber.append(spentNumberNew)
         spentNew.grid(row=self.ToDoNumber, column=1)
 
         # 押すと経過時間を+1させるボタンを配置
         spentButtonNew = Tk.Button(self, text='+1',
                                    command=spentPlusOne(spentNumberNew))
-        self.spentButton.append(spentButtonNew)
+        spentButton.append(spentButtonNew)
         spentButtonNew.grid(row=self.ToDoNumber, column=2)
 
         # 目標時間を表すラベルを配置
@@ -80,13 +87,13 @@ class Application(Tk.Frame):
         estimateNew = Tk.Label(self, width=2, textvariable=estimateNumberNew)
         # self.estimate.append(estimateNew)
         estimate.append(estimateNew)
-        self.estimateNumber.append(estimateNumberNew)
+        estimateNumber.append(estimateNumberNew)
         estimateNew.grid(row=self.ToDoNumber, column=3)
 
         # 削除ボタンを配置
         deleteButtonNew = Tk.Button(self, text='×',
                                     command=deleteToDoList(self.ToDoNumber))
-        self.deleteButton.append(deleteButtonNew)
+        deleteButton.append(deleteButtonNew)
         deleteButtonNew.grid(row=self.ToDoNumber, column=4)
 
         # EditBoxに書かれている文字列を消去
@@ -111,7 +118,11 @@ class deleteToDoList:
 
     def __call__(self, event=None):
         estimate[self.toDoNumber-1].destroy()
-        estimate.pop(self.toDoNumber-1)
+        # estimate.pop(self.toDoNumber-1)
+        ToDo[self.toDoNumber-1].destroy()
+        spent[self.toDoNumber-1].destroy()
+        spentButton[self.toDoNumber-1].destroy()
+        deleteButton[self.toDoNumber-1].destroy()
 
 
 root = Tk.Tk()
