@@ -1,11 +1,13 @@
 import tkinter as Tk
 
+estimate = []
+
 
 class Application(Tk.Frame):
     def __init__(self, master=None):
         Tk.Frame.__init__(self, master)
         self.master.title('Todo List')
-        self.master.geometry('400x300')
+        self.master.geometry('500x300')
 
         # 変数初期化
         self.ToDoNumber = 0
@@ -13,9 +15,10 @@ class Application(Tk.Frame):
         self.txt = []
         self.spent = []
         self.spentNumber = []
-        self.spentButtom = []
-        self.estimate = []
+        self.spentButton = []
+        # self.estimate = []
         self.estimateNumber = []
+        self.deleteButton = []
 
         # ウィジェットの生成・配置
         self.create_widgets()
@@ -68,16 +71,23 @@ class Application(Tk.Frame):
         # 押すと経過時間を+1させるボタンを配置
         spentButtonNew = Tk.Button(self, text='+1',
                                    command=spentPlusOne(spentNumberNew))
-        self.spentButtom.append(spentButtonNew)
+        self.spentButton.append(spentButtonNew)
         spentButtonNew.grid(row=self.ToDoNumber, column=2)
 
         # 目標時間を表すラベルを配置
         estimateNumberNew = Tk.StringVar()
         estimateNumberNew.set(self.TimeBox.get())
         estimateNew = Tk.Label(self, width=2, textvariable=estimateNumberNew)
-        self.estimate.append(estimateNew)
+        # self.estimate.append(estimateNew)
+        estimate.append(estimateNew)
         self.estimateNumber.append(estimateNumberNew)
         estimateNew.grid(row=self.ToDoNumber, column=3)
+
+        # 削除ボタンを配置
+        deleteButtonNew = Tk.Button(self, text='×',
+                                    command=deleteToDoList(self.ToDoNumber))
+        self.deleteButton.append(deleteButtonNew)
+        deleteButtonNew.grid(row=self.ToDoNumber, column=4)
 
         # EditBoxに書かれている文字列を消去
         self.EditBox.delete(0, Tk.END)
@@ -92,6 +102,16 @@ class spentPlusOne:  # 参考(http://www.shido.info/py/tkinter5.html)
 
     def __call__(self, event=None):
         self.spentNumber.set(str(int(self.spentNumber.get())+1))
+
+
+class deleteToDoList:
+    def __init__(self, toDoNumber):
+        # self.estimate = estimate
+        self.toDoNumber = toDoNumber
+
+    def __call__(self, event=None):
+        estimate[self.toDoNumber-1].destroy()
+        estimate.pop(self.toDoNumber-1)
 
 
 root = Tk.Tk()
