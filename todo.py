@@ -13,6 +13,7 @@ class Application(Tk.Frame):
         self.txt = []
         self.spent = []
         self.spentNumber = []
+        self.spentButtom = []
         self.estimate = []
         self.estimateNumber = []
 
@@ -56,6 +57,7 @@ class Application(Tk.Frame):
         self.ToDoNumber += 1
         ToDoNew.grid(row=self.ToDoNumber, column=0)
 
+        # 経過時間を表すラベルを配置
         spentNumberNew = Tk.StringVar()
         spentNumberNew.set('0')
         spentNew = Tk.Label(self, width=2, textvariable=spentNumberNew)
@@ -63,18 +65,33 @@ class Application(Tk.Frame):
         self.spentNumber.append(spentNumberNew)
         spentNew.grid(row=self.ToDoNumber, column=1)
 
+        # 押すと経過時間を+1させるボタンを配置
+        spentButtonNew = Tk.Button(self, text='+1',
+                                   command=spentPlusOne(spentNumberNew))
+        self.spentButtom.append(spentButtonNew)
+        spentButtonNew.grid(row=self.ToDoNumber, column=2)
+
+        # 目標時間を表すラベルを配置
         estimateNumberNew = Tk.StringVar()
         estimateNumberNew.set(self.TimeBox.get())
         estimateNew = Tk.Label(self, width=2, textvariable=estimateNumberNew)
         self.estimate.append(estimateNew)
         self.estimateNumber.append(estimateNumberNew)
-        estimateNew.grid(row=self.ToDoNumber, column=2)
+        estimateNew.grid(row=self.ToDoNumber, column=3)
 
         # EditBoxに書かれている文字列を消去
         self.EditBox.delete(0, Tk.END)
 
         # TimeBoxに書かれている文字列を消去
         self.TimeBox.delete(0, Tk.END)
+
+
+class spentPlusOne:  # 参考(http://www.shido.info/py/tkinter5.html)
+    def __init__(self, spentNumber):
+        self.spentNumber = spentNumber
+
+    def __call__(self, event=None):
+        self.spentNumber.set(str(int(self.spentNumber.get())+1))
 
 
 root = Tk.Tk()
