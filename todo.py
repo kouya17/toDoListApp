@@ -65,13 +65,16 @@ class Application(Tk.Frame):
 
         estimateNumberNew = Tk.StringVar()
         estimateNumberNew.set(self.TimeBox.get())
-        estimateNew = Tk.Label(self, width=2, txtvariable=estimateNumberNew)
+        estimateNew = Tk.Label(self, width=2, textvariable=estimateNumberNew)
         self.estimate.append(estimateNew)
         self.estimateNumber.append(estimateNumberNew)
         estimateNew.grid(row=self.ToDoNumber, column=2)
 
         # EditBoxに書かれている文字列を消去
         self.EditBox.delete(0, Tk.END)
+
+        # TimeBoxに書かれている文字列を消去
+        self.TimeBox.delete(0, Tk.END)
 
 
 root = Tk.Tk()
